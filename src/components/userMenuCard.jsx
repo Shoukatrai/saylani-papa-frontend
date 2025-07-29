@@ -16,6 +16,9 @@ import { BASE_URL, toastAlert } from '../utils';
 import apiEndPoints from '../constant/apiEndPoints';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addToCart } from '../redux/slices/cartSlice';
+// import { increment } from '../redux/slices/cartSlice';
 
 const obj = {
     customerName: "Shoukat rai",
@@ -27,29 +30,13 @@ const obj = {
 
 const UserMenuCard = ({ menu }) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const makeOrderNow = async (menu) => {
         try {
-            const token = Cookies.get("token")
-            if (!token) {
-                console.log("token")
-                navigate("/login")
-                return;
-            }
-            console.log("makeOrderNow")
-            const saveObj = {
-                menuName: menu.menuName,
-                menuId: menu._id
-            }
-            const api = `${BASE_URL}${apiEndPoints.makeOrder}`
-            const response = await axios.post("http://localhost:5000/api/client/make-order", saveObj, {
-                headers: {
-                    Authorization: `Bearer ${Cookies.get("token")}`
-                }
-            })
-            console.log("order response", response)
-            toastAlert({
+            dispatch(addToCart(menu));
+             toastAlert({
                 type: "success",
-                message: response.data.message
+                message: "Order Added!"
             })
         } catch (error) {
             toastAlert({

@@ -2,13 +2,14 @@ import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Login, Signup } from './pages'
 import { Bounce, ToastContainer } from 'react-toastify'
-import { Cart, ClientDash, OrderFromRestaurants, SingleRestaurant } from './pages/client'
+import { ClientDash, OrderFromRestaurants, SingleRestaurant } from './pages/client'
 import { AdminDashboard, Menues, Orders, Restaurants, Users, Vendors } from './pages/admin'
 import { VendoMenu, Order, VendorDash, VendorRestaurant } from './pages/vendor'
 import { AdminRoutes, AuthRoutes, VendorRoutes, ClientRoutes } from './routes'
 import VerifyEmail from './pages/email/VerifyEmail'
 import Unauthorized from './pages/routesHandle/Unauthorized'
 import NotFoundPage from './pages/routesHandle/NotFoundPage '
+import CheckoutPage from './pages/client/cart/Cart'
 
 
 
@@ -46,7 +47,7 @@ function App() {
           <Route index element={<ClientDash />} />
           <Route element={<ClientRoutes />}>
             <Route path='/order-now' element={<OrderFromRestaurants />} />
-            <Route path='/cart' element={<Cart />} />
+            <Route path='/cart' element={<CheckoutPage />} />
             <Route path='/single-restaurant' element={<SingleRestaurant />} />
           </Route>
           <Route path='/unauthorized' element={<Unauthorized />} />

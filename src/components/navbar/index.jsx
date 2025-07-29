@@ -19,6 +19,8 @@ import { Stack } from '@mui/material';
 import Cookies from "js-cookie";
 import { useNavigate } from 'react-router-dom';
 import { toastAlert } from '../../utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart } from '../../redux/slices/cartSlice';
 
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,11 +66,13 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [mobileSearchVisible, setMobileSearchVisible] = React.useState(false);
-
+   const cartItems = useSelector((state) => state.cart.items);
+  const itemCount = cartItems?.length;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const isLogin = Cookies.get("token")
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -93,16 +97,18 @@ export default function Navbar() {
 
   const handleLogin = () => {
     navigate("/login")
-    handleMenuClose()
-    toastAlert({
-      type  : "success",
-      message : "Logout successful!"
-    })
-  }
+    handleMenuClose()}
+
+    //logout
   const handleLogout = () => {
     Cookies.remove("token")
     Cookies.remove("type")
     handleMenuClose()
+    dispatch(clearCart())
+    toastAlert({
+      type: "success",
+      message: "Logout successful!"
+    })
   }
 
   const menuId = 'primary-search-account-menu';
@@ -148,7 +154,7 @@ export default function Navbar() {
     >
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
+          <Badge badgeContent={itemCount || 0} color="error">
             <ShoppingCartIcon />
           </Badge>
         </IconButton>
@@ -160,7 +166,7 @@ export default function Navbar() {
           aria-label="show 17 new notifications"
           color="inherit"
         >
-          <Badge badgeContent={17} color="error">
+          <Badge badgeContent={0} color="error">
             <NotificationsIcon />
           </Badge>
         </IconButton>
@@ -237,12 +243,12 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="error">
-                <ShoppingCartIcon onClick = {()=>{navigate("/cart")}} />
+              <Badge badgeContent={itemCount || 0} color="error"> 
+                <ShoppingCartIcon onClick={() => { navigate("/cart") }} />
               </Badge>
             </IconButton>
             <IconButton size="large" aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="error">
+              <Badge badgeContent={0} color="error">
                 <NotificationsIcon />
               </Badge>
             </IconButton>

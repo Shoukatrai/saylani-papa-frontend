@@ -1,57 +1,114 @@
-import React, { useEffect, useState } from "react";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { clearCart , decreaseQuantity ,increaseQuantity , removeFromCart} from '../../../redux/slices/cartSlice';
+import {
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  CardActions,
+  Button,
+  Divider,
+  Box,
+  Stack,
+} from '@mui/material';
+import Navbar from '../../../components/navbar';
 
-import { Box, CircularProgress, Typography } from "@mui/material";
-import Navbar from "../../../components/navbar";
-import OrderStatusNavbar from "../../../components/navbar/CartNavbar";
+const CheckoutPage = () => {
+  const cartItems = useSelector((state) => state.cart.items);
+  console.log("cartItems", cartItems)
+  const dispatch = useDispatch();
 
-const OrdersPage = () => {
-  const [status, setStatus] = useState("All");
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
+  //  const total = cartItems.reduce((sum, item) => sum + item.menuPrice, 0);
+ const total = cartItems.reduce((sum, item) => sum + Number(item.menuPrice) * item.quantity, 0);
 
-  const fetchOrders = async (status) => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/api/orders?status=${status}`);
-      const data = await response.json();
-      setOrders(data);
-    } catch (error) {
-      console.error("Failed to fetch orders:", error);
-      setOrders([]);
-    } finally {
-      setLoading(false);
-    }
+
+  // console.log("total" , total)
+
+  const handlePlaceOrder = () => {
+    alert('Order placed successfully!');
+    dispatch(clearCart());
   };
 
-  useEffect(() => {
-    fetchOrders(status);
-  }, [status]);
-
   return (
-    <Box>
+    <>
       <Navbar />
-      <OrderStatusNavbar
-        currentStatus={status}
-        onStatusChange={(newStatus) => setStatus(newStatus)}
-      />
 
-      <Box p={2}>
-        {loading ? (
-          <CircularProgress />
-        ) : orders.length === 0 ? (
-          <Typography>No orders found for "{status}"</Typography>
+      <Container maxWidth="md" sx={{ mt: 4 }}>
+        <Typography variant="h4" gutterBottom>
+          Checkout
+        </Typography>
+
+        {cartItems?.length === 0 ? (
+          <Typography variant="h6" color="text.secondary">
+            Your cart is empty.
+          </Typography>
         ) : (
-          orders.map((order) => (
-            <Box key={order.id} p={2} border="1px solid #ccc" borderRadius="8px" mb={2}>
-              <Typography variant="subtitle1">Order ID: {order.id}</Typography>
-              <Typography>Status: {order.status}</Typography>
-              <Typography>Total: ${order.total}</Typography>
-            </Box>
-          ))
-        )}
+          <>
+            <Stack spacing={2}>
+              {cartItems.map((item, index) => (
+                <Box key={index}>
+                  <Card variant="outlined">
+  <CardContent>
+    <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box>
+        <Typography variant="h6">{item.menuName}</Typography>
+        <Typography color="text.secondary">Rs {item.menuPrice}</Typography>
+        <Typography variant="body2" color="text.secondary">
+          Quantity: {item.quantity}
+        </Typography>
+      </Box>
+
+      <Box display="flex" flexDirection="column" alignItems="center" gap={1}>
+        <Box display="flex" gap={1}>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => dispatch(decreaseQuantity(item._id))}
+          >
+            -
+          </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => dispatch(increaseQuantity(item._id))}
+          >
+            +
+          </Button>
+        </Box>
+
+        <Button
+          variant="contained"
+          color="error"
+          size="small"
+          onClick={() => dispatch(removeFromCart(item._id))}
+        >
+          Delete
+        </Button>
       </Box>
     </Box>
+  </CardContent>
+</Card>
+
+                </Box>
+              ))}
+            </Stack>
+
+            <Divider sx={{ my: 3 }} />
+
+            <Box display="flex" justifyContent="flex-end" alignItems="center" mt={2}>
+              <Typography variant="h6" sx={{ mr: 2 }}>
+                Total: {Math.round(total)}
+              </Typography>
+              <Button variant="contained" color="primary" onClick={handlePlaceOrder}>
+                Place Order
+              </Button>
+            </Box>
+          </>
+        )}
+      </Container>
+    </>
   );
 };
 
-export default OrdersPage;
+export default CheckoutPage;
