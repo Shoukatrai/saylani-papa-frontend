@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 import {
   AppBar,
   Box,
@@ -70,20 +71,46 @@ function AdminLayout(props) {
 
   const drawer = (
     <div>
-      <Stack
-        flexDirection="row"
-        textAlign="center"
-        justifyContent="center"
-        alignItems="center"
-        my={1.4}
+      <Link
+        to="/"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          textDecoration: 'none',
+          gap: '10px',
+          margin: '1.1rem 0',
+        }}
       >
-        <Typography variant="h4" sx={{ fontWeight: 700, color: '#2e7d32', letterSpacing: 1 }}>
-          Saylani
-        </Typography>
-        <Typography variant="h4" sx={{ fontWeight: 700, color: 'blue', letterSpacing: 1 }}>
-          PAPA
-        </Typography>
-      </Stack>
+        <FastfoodIcon style={{ fontSize: '2rem', color: '#2e7d32' }} />
+
+        <div style={{ display: 'flex', flexDirection: 'row', gap: '6px', alignItems: 'center' }}>
+          <Typography
+            variant="h5"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: 300,
+              color: '#2e7d32',
+              letterSpacing: '0.1px',
+            }}
+          >
+            Saylani
+          </Typography>
+
+          <Typography
+            variant="h5"
+            style={{
+              fontFamily: "'Poppins', sans-serif",
+              fontWeight: 300,
+              color: 'blue',
+              letterSpacing: '1px',
+            }}
+          >
+            PAPA
+          </Typography>
+        </div>
+      </Link>
       <Divider />
       <List>
         {VendorListing.map((list) => (

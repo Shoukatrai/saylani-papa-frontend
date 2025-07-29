@@ -33,10 +33,13 @@ const UserMenuCard = ({ menu }) => {
     const dispatch = useDispatch()
     const makeOrderNow = async (menu) => {
         try {
+            if(!Cookies.get("token")){
+                return navigate("/login")
+            }
             dispatch(addToCart(menu));
-             toastAlert({
+            toastAlert({
                 type: "success",
-                message: "Order Added!"
+                message: "Added to Cart"
             })
         } catch (error) {
             toastAlert({

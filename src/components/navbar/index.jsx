@@ -17,11 +17,12 @@ import MoreIcon from '@mui/icons-material/MoreVert';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Stack } from '@mui/material';
 import Cookies from "js-cookie";
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { toastAlert } from '../../utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart } from '../../redux/slices/cartSlice';
-
+import FastfoodIcon from '@mui/icons-material/Fastfood';
+import RemoveShoppingCartIcon from '@mui/icons-material/RemoveShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,7 +67,7 @@ export default function Navbar() {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [mobileSearchVisible, setMobileSearchVisible] = React.useState(false);
-   const cartItems = useSelector((state) => state.cart.items);
+  const cartItems = useSelector((state) => state.cart.items);
   const itemCount = cartItems?.length;
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -97,9 +98,10 @@ export default function Navbar() {
 
   const handleLogin = () => {
     navigate("/login")
-    handleMenuClose()}
+    handleMenuClose()
+  }
 
-    //logout
+  //logout
   const handleLogout = () => {
     Cookies.remove("token")
     Cookies.remove("type")
@@ -155,7 +157,7 @@ export default function Navbar() {
       <MenuItem>
         <IconButton size="large" aria-label="show 4 new mails" color="inherit">
           <Badge badgeContent={itemCount || 0} color="error">
-            <ShoppingCartIcon />
+           <ShoppingCartIcon /> 
           </Badge>
         </IconButton>
         <p>Orders</p>
@@ -212,12 +214,45 @@ export default function Navbar() {
             my={1.4}
             sx={{ flexGrow: { xs: 1, sm: 0 } }}
           >
-            <Typography variant="h5" sx={{ fontWeight: 700, color: '#2e7d32', letterSpacing: 1 }}>
-              Saylani
-            </Typography>
-            <Typography variant="h5" sx={{ fontWeight: 700, color: 'white', letterSpacing: 1, ml: 1 }}>
-              PAPA
-            </Typography>
+            <Link
+              to="/"
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                textDecoration: 'none',
+                gap: '8px',
+              }}
+            >
+              <FastfoodIcon style={{ fontSize: '2rem', color: '#2e7d32' }} />
+
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                <Typography
+                  variant="h4"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontWeight: 800,
+                    fontSize: '1.8rem',
+                    color: '#2e7d32',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  Saylani
+                </Typography>
+                <Typography
+                  variant="h5"
+                  style={{
+                    fontFamily: "'Poppins', sans-serif",
+                    fontWeight: 600,
+                    fontSize: '1.6rem',
+                    color: 'white',
+                    letterSpacing: '1px',
+                  }}
+                >
+                  PAPA
+                </Typography>
+              </div>
+            </Link>
+
           </Stack>
 
           <Search
@@ -243,7 +278,7 @@ export default function Navbar() {
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
             <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={itemCount || 0} color="error"> 
+              <Badge badgeContent={itemCount || 0} color="error">
                 <ShoppingCartIcon onClick={() => { navigate("/cart") }} />
               </Badge>
             </IconButton>

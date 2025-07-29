@@ -21,7 +21,7 @@ import RestaurantIcon from '@mui/icons-material/Restaurant';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, Button, Menu, MenuItem, Stack } from '@mui/material';
 import Cookies from 'js-cookie';
-
+import FastfoodIcon from '@mui/icons-material/Fastfood';
 
 const linkStyle = {
     textDecoration: 'none',
@@ -96,7 +96,7 @@ function VendorLayout(props) {
     const handleLogout = () => {
         Cookies.remove("token")
         Cookies.remove("type")
-       
+
         handleClose()
         navigate("/login")
     }
@@ -104,14 +104,47 @@ function VendorLayout(props) {
     const drawer = (
         <div>
             {/* <Toolbar /> */}
-            <Stack flexDirection={"row"} textAlign={"center"} justifyContent={"center"} alignContent={"center"} my={1.4}>
-                <Typography variant="h4" sx={{ fontWeight: 700, color: '#2e7d32', letterSpacing: 1 }}>
-                    Saylani
-                </Typography>
-                <Typography variant="h4" sx={{ fontWeight: 700, color: 'blue', letterSpacing: 1 }}>
-                    PAPA
-                </Typography>
-            </Stack>
+            <Link
+                to="/"
+                style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    textAlign: 'center',
+                    textDecoration: 'none',
+                    gap: '10px',
+                    margin: '1.1rem 0',
+                }}
+            >
+                <FastfoodIcon style={{ fontSize: '2rem', color: '#2e7d32' }} />
+
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '6px', alignItems: 'center' }}>
+                    <Typography
+                        variant="h5"
+                        style={{
+                            fontFamily: "'Poppins', sans-serif",
+                            fontWeight: 300,
+                            color: '#2e7d32',
+                            letterSpacing: '0.1px',
+                        }}
+                    >
+                        Saylani
+                    </Typography>
+
+                    <Typography
+                        variant="h5"
+                        style={{
+                            fontFamily: "'Poppins', sans-serif",
+                            fontWeight: 300,
+                            color: 'blue',
+                            letterSpacing: '1px',
+                        }}
+                    >
+                        PAPA
+                    </Typography>
+                </div>
+            </Link>
+
             <Divider />
             <List>
                 {VendorListing.map((list, index) => (
