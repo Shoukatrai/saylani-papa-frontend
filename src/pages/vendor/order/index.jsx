@@ -53,8 +53,7 @@ const Order = () => {
   }
   return (
     <div>
-      <VendorLayout dashTitle = {"Vendor Orders"}>
-        <h1>Orders</h1>
+      <VendorLayout dashTitle={"Vendor Orders"}>
         <TableContainer component={Paper} sx={{ boxShadow: 4, borderRadius: 3, mt: 3 }}>
           <Table
             sx={{
@@ -74,87 +73,75 @@ const Order = () => {
                 textAlign: "center"
               },
             }}
-            aria-label="a dense table"
+            aria-label="orders table"
           >
             <TableHead>
               <TableRow>
                 <TableCell>Customer Name</TableCell>
-                <TableCell> Menu </TableCell>
+                <TableCell>Menu Items</TableCell>
+                <TableCell>Total Quantity</TableCell>
+                <TableCell>Total Amount</TableCell>
                 <TableCell>Status</TableCell>
-                <TableCell>Quantity</TableCell>
                 <TableCell>Created At</TableCell>
                 <TableCell>Actions</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {ordersData.map((order, idx) => (
-                <TableRow
-                  key={order?._id}
-                  sx={{
-                    bgcolor:
-                      order.orderStatus === "delivered"
-                        ? "success.light"
-                        : order.orderStatus === "cancelled"
-                          ? "error.light"
-                          : order.orderStatus === "preparing"
-                            ? "warning.light"
-                            : "background.paper",
-                    '&:hover': {
-                      bgcolor: 'grey.200',
-                      transition: 'background 0.2s',
-                    },
-                    '&:last-child td, &:last-child th': { border: 0 },
-                  }}
-                >
-                  <TableCell scope="row">
-                    {order?.customerName}
-                  </TableCell>
-                  <TableCell>{order?.menuName}</TableCell>
-                  <TableCell>{order?.orderStatus}</TableCell>
-                  <TableCell>{order?.quantity}</TableCell>
+              {ordersData.map((order) => {
+                const itemsString = order.items
+                  .map(item => `${item.menuName} (x${item.quantity})`)
+                  .join(", ");
 
-                  {/* <TableCell>
-                    <span style={{
-                      color: restaurant.isDeleted ? '#d32f2f' : '#388e3c',
-                      fontWeight: 600
-                    }}>
-                      {restaurant.isDeleted ? "Yes" : "No"}
-                    </span>
-                  </TableCell> */}
+                const totalQuantity = order.items.reduce((sum, item) => sum + item.quantity, 0);
 
-                  {/* <TableCell>
-                    <span style={{
-                      color: restaurant.isApproved ? '#388e3c' : '#fbc02d',
-                      fontWeight: 600
-                    }}>
-                      {restaurant.isApproved ? "Yes" : "No"}
-                    </span>
-                  </TableCell> */}
-
-                  <TableCell>
-                    {new Date(order.createdAt).toLocaleString()}
-                  </TableCell>
-
-                  <TableCell>
-                    <FormControl fullWidth size="small">
-                      <Select
-                        value={order.orderStatus}
-                        onChange={(e) => handleStatusChange(order._id, e.target.value)}
-                      >
-                        {["pending", "confirmed", "preparing", "delivered", "cancelled"].map((status) => (
-                          <MenuItem key={status} value={status}>
-                            {status.charAt(0).toUpperCase() + status.slice(1)}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </TableCell>
-
-                </TableRow>
-              ))}
+                return (
+                  <TableRow
+                    key={order._id}
+                    sx={{
+                      bgcolor:
+                        order.orderStatus === "delivered"
+                          ? "success.light"
+                          : order.orderStatus === "cancelled"
+                            ? "error.light"
+                            : order.orderStatus === "preparing"
+                              ? "warning.light"
+                              : "background.paper",
+                      '&:hover': {
+                        bgcolor: 'grey.200',
+                        transition: 'background 0.2s',
+                      },
+                      '&:last-child td, &:last-child th': { border: 0 },
+                    }}
+                  >
+                    <TableCell>{order.customerName}</TableCell>
+                    <TableCell>{itemsString}</TableCell>
+                    <TableCell>{totalQuantity}</TableCell>
+                    <TableCell>Rs. {order.totalAmount}</TableCell>
+                    <TableCell>{order.orderStatus}</TableCell>
+                    <TableCell>
+                      {new Date(order.createdAt).toLocaleString()}
+                    </TableCell>
+                    <TableCell>
+                      <FormControl fullWidth size="small">
+                        <Select
+                          value={order.orderStatus}
+                          onChange={(e) => handleStatusChange(order._id, e.target.value)}
+                        >
+                          {["pending", "confirmed", "preparing", "delivered", "cancelled"].map((status) => (
+                            <MenuItem key={status} value={status}>
+                              {status.charAt(0).toUpperCase() + status.slice(1)}
+                            </MenuItem>
+                          ))}
+                        </Select>
+                      </FormControl>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </TableContainer>
+
       </VendorLayout>
     </div>
   )
