@@ -1,5 +1,5 @@
 import { Bounce, toast } from "react-toastify";
-export const BASE_URL = "http://localhost:5000/api"
+export const BASE_URL = "http://ec2-13-53-133-41.eu-north-1.compute.amazonaws.com:80/api"
 
 
 export const toastAlert = (obj) => {
