@@ -5,7 +5,7 @@ import VendorLayout from "./layouts/vendorLayout";
 import MenuCard from "./MenuCard";
 import { AddMenuModal } from "./modals/AddMenuModal";
 import { AddResModal } from "./modals/addResModal";
-import { UpdateMenuModal } from "./modals/updateMenuModal";
+// import { UpdateMenuModal } from "./modals/updateMenuModal";
 import { UpdateResModal } from "./modals/UpdateResModal ";
 import RestaurantCard from "./RestaurantCard";
 
@@ -16,7 +16,7 @@ export {
     VendorLayout,
     AddMenuModal,
     AddResModal,
-    UpdateMenuModal,
+    // UpdateMenuModal,
     UpdateResModal,
     MenuCard,
     RestaurantCard

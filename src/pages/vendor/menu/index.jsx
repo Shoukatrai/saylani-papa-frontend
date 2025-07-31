@@ -7,7 +7,7 @@ import { BASE_URL } from '../../../utils'
 import apiEndPoints from '../../../constant/apiEndPoints'
 import Cookies from "js-cookie"
 import MenuCard from '../../../components/MenuCard'
-import { UpdateMenuModal } from '../../../components' 
+import { UpdateMenuModal } from '../../../components/modals/UpdateMenuModal' 
 import { VendorLayout } from '../../../components'
 
 
