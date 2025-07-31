@@ -9,7 +9,7 @@ import { CircularProgress, MenuItem, Stack, TextField } from '@mui/material';
 import { Controller, useForm } from 'react-hook-form';
 import { BASE_URL, toastAlert } from '../../utils';
 import axios from 'axios';
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 import apiEndPoints from '../../constant/apiEndPoints';
 
 

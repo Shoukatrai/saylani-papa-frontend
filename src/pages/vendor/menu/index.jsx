@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, Stack } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import { AddMenuModal } from '../../../components/modals/AddMenuModal'
@@ -7,9 +7,8 @@ import { BASE_URL } from '../../../utils'
 import apiEndPoints from '../../../constant/apiEndPoints'
 import Cookies from "js-cookie"
 import MenuCard from '../../../components/MenuCard'
-import { UpdateMenuModal } from '../../../components/modals/updateMenuModal'
+import { UpdateMenuModal } from '../../../components' 
 import { VendorLayout } from '../../../components'
-import { useSelector } from 'react-redux'
 
 
 
