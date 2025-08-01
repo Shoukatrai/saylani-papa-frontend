@@ -6,9 +6,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { BASE_URL, toastAlert } from '../../utils'
 import Cookies from "js-cookie"
 import apiEndPoints from '../../constant/apiEndPoints'
+import { useDispatch } from 'react-redux'
+import { setUser } from '../../redux/slices/userSlice'
 
 
 const Login = () => {
+  const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
   const { control, handleSubmit } = useForm({
@@ -56,6 +59,7 @@ const Login = () => {
       
       Cookies.set("token", response.data.token)
       Cookies.set("type", response.data.data.type)
+      dispatch(setUser(response.data.data))
       setLoading(false)
       const userType = response.data.data.type
 

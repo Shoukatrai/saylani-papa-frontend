@@ -1,5 +1,5 @@
 import { Bounce, toast } from "react-toastify";
-export const BASE_URL = "http://ec2-16-16-204-153.eu-north-1.compute.amazonaws.com:80/api"
+export const BASE_URL = "https://saylani-papa-backend.vercel.app/api"
 
 
 export const toastAlert = (obj) => {

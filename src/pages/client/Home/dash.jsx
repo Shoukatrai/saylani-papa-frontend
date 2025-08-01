@@ -10,11 +10,14 @@ import { BASE_URL } from '../../../utils'
 import apiEndPoints from '../../../constant/apiEndPoints'
 import Cookies from "js-cookie"
 import { MakeOrderModal } from '../../../components/modals/MakeOrderModal'
+import { useSelector } from 'react-redux'
 
 const ClientDash = () => {
   const [refresh, setRefresh] = useState(true)
   const [restaurants, setRestaurants] = useState([])
   const [menuData, setMenuData] = useState([])
+  const user = useSelector((state)=>state.user)
+  console.log("redux user" , user)
 
   const fetchMenu = async () => {
     try {
